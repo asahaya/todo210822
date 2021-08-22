@@ -1,25 +1,34 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:todo210822/list/list_model.dart';
+import 'package:todo210822/domain/koutei.dart';
+import 'package:todo210822/edit/edit_model.dart';
 
-import 'add_model.dart';
 
-class Addpage extends StatelessWidget {
+
+class EditPage extends StatelessWidget {
+
+
+
+  final Koutei koutei;
+  EditPage(this.koutei);
+
+
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<AddModel>(
-      create: (_) => AddModel(),
+    return ChangeNotifierProvider<EditModel>(
+      create: (_) => EditModel(koutei),
       child: Scaffold(
         appBar: AppBar(
-          title: Text("一覧"),
+          title: Text("edit"),
         ),
         body: Center(
-          child: Consumer<AddModel>(builder: (context, model, child) {
+          child: Consumer<EditModel>(builder: (context, model, child) {
             return Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(children: [
                 TextFormField(
+                  controller: model.titleCon,
                   decoration: InputDecoration(
                     labelText: "名前",
                   ),
@@ -28,6 +37,7 @@ class Addpage extends StatelessWidget {
                   },
                 ),
                 TextFormField(
+                  controller: model.authorCon,
                   decoration: InputDecoration(
                     labelText: "Name",
                   ),
@@ -39,7 +49,7 @@ class Addpage extends StatelessWidget {
                     onPressed: ()async {
                       //modelのメソッドに移動
                       try {
-                        await model.addList();
+                        await model.updateList();
 
                         Navigator.of(context).pop(true);
                       } catch (e) {
@@ -49,7 +59,7 @@ class Addpage extends StatelessWidget {
                         ScaffoldMessenger.of(context).showSnackBar(snackBar);
                       }
                     },
-                    child: Text("追加する")),
+                    child: Text("更新する")),
               ]),
             );
           }),
