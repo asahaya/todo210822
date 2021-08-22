@@ -1,5 +1,7 @@
 class Koutei{
-  Koutei(this.title,this.author);
+  Koutei(this.id,this.title,this.author);
+
+  String id;
   String title;
   String author;
 }

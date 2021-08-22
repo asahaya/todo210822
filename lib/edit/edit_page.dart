@@ -4,15 +4,10 @@ import 'package:provider/provider.dart';
 import 'package:todo210822/domain/koutei.dart';
 import 'package:todo210822/edit/edit_model.dart';
 
-
-
 class EditPage extends StatelessWidget {
-
-
-
   final Koutei koutei;
-  EditPage(this.koutei);
 
+  EditPage(this.koutei);
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +28,7 @@ class EditPage extends StatelessWidget {
                     labelText: "名前",
                   ),
                   onChanged: (text) {
-                    model.title = text;
+                    model.setTitle(text);
                   },
                 ),
                 TextFormField(
@@ -42,23 +37,27 @@ class EditPage extends StatelessWidget {
                     labelText: "Name",
                   ),
                   onChanged: (text) {
-                    model.author = text;
+                    model.setAuthor(text);
                   },
                 ),
                 ElevatedButton(
-                    onPressed: ()async {
-                      //modelのメソッドに移動
-                      try {
-                        await model.updateList();
+                    onPressed: model.isUpdated()
+                        ? () async {
+                            //modelのメソッドに移動
+                            try {
+                              await model.updateList();
 
-                        Navigator.of(context).pop(true);
-                      } catch (e) {
-                        final snackBar=SnackBar(
-                            backgroundColor: Colors.red,
-                            content: Text(e.toString()));
-                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                      }
-                    },
+                              Navigator.of(context).pop(model.title);
+                            } catch (e) {
+                              final snackBar = SnackBar(
+                                backgroundColor: Colors.red,
+                                content: Text(e.toString()),
+                              );
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(snackBar);
+                            }
+                          }
+                        : null,
                     child: Text("更新する")),
               ]),
             );

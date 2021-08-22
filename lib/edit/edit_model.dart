@@ -16,15 +16,27 @@ class EditModel extends ChangeNotifier {
   String? title;
   String? author;
 
+  //更新
+  void setTitle(String title){
+    this.title=title;
+    notifyListeners();
+  }
+  void setAuthor(String author){
+    this.author=author;
+    notifyListeners();
+  }
+
+
+  bool isUpdated(){
+    return title!=null || author!=null;
+  }
+
   Future updateList() async {
-    if (title == null || title!.isEmpty) {
-      throw "タイトル記入なし";
-    }
-    if (author == null|| author!.isEmpty) {
-      throw "タイトル記入なし";
-    }
+
+    this.title=titleCon.text;
+    this.author=authorCon.text;
     //FireStoreに追加処理（Writing)かきこ
-    await FirebaseFirestore.instance.collection("todo").add({
+    await FirebaseFirestore.instance.collection("todo").doc(koutei.id).update({
       "title": title,
       "author": author,
     });

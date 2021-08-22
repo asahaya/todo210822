@@ -40,17 +40,16 @@ class HomeList extends StatelessWidget {
                           onTap: () async {
                             //編集画面に遷移
                             //画面遷移
-                            final bool? added = await Navigator.push(
+                            final String? title = await Navigator.push(
                               context,
                               MaterialPageRoute(
                                 builder: (context) => EditPage(koutei),
-
                               ),
                             );
-                            if (added != null && added) {
+                            if (title != null) {
                               final snackBar = SnackBar(
                                   backgroundColor: Colors.purpleAccent,
-                                  content: Text("編集しました"));
+                                  content: Text("$title を編集しました"));
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(snackBar);
                             }
@@ -63,8 +62,9 @@ class HomeList extends StatelessWidget {
                           caption: 'Delete',
                           color: Colors.red,
                           icon: Icons.delete,
-                          onTap: () {
+                          onTap: () async {
                             //削除
+                            await showConfirmDialog(context, koutei,model);
                           },
                         ),
                       ],
@@ -102,5 +102,43 @@ class HomeList extends StatelessWidget {
         }),
       ),
     );
+  }
+
+  Future showConfirmDialog(
+    BuildContext context,
+    Koutei koutei,
+    HomeListModel model,
+  ) {
+    return showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (_) {
+          return AlertDialog(
+            title: Text("${koutei.title} を削除しますか"),
+            content: Text("--"),
+            actions: [
+              TextButton(
+                child: Text("No"),
+                onPressed: () => Navigator.pop(context),
+              ),
+              TextButton(
+                child: Text("Yes"),
+                onPressed: () async{
+                  //modelで削除
+                  await model.delete(koutei);
+
+                  Navigator.pop(context);
+
+                  final snackBar = SnackBar(
+                      backgroundColor: Colors.deepPurpleAccent,
+                      content: Text("${koutei.title} を編集しました"));
+                  model.tsuikaList();
+                  ScaffoldMessenger.of(context)
+                      .showSnackBar(snackBar);
+                },
+              ),
+            ],
+          );
+        });
   }
 }

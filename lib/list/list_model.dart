@@ -9,22 +9,24 @@ class HomeListModel extends ChangeNotifier{
 
   final _userColl= FirebaseFirestore.instance.collection("todo");
 
-
   List<Koutei>? koutei;
 
   void tsuikaList()async{
     final QuerySnapshot snapshot= await _userColl.get();
 
-
-
     final List<Koutei> koutei= snapshot.docs.map((DocumentSnapshot document) {
       Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
+      final String id= document.id;
       final String title=data["title"];
       final String author=data["author"];
-      return Koutei(title, author);
+      return Koutei(id,title, author);
     }).toList();
 
      this.koutei=koutei;
      notifyListeners();
   }
+
+   Future delete(Koutei koutei) {
+     return FirebaseFirestore.instance.collection("todo").doc(koutei.id).delete();
+   }
 }
