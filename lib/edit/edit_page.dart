@@ -22,22 +22,96 @@ class EditPage extends StatelessWidget {
             return Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(children: [
-                TextFormField(
-                  controller: model.titleCon,
-                  decoration: InputDecoration(
-                    labelText: "名前",
-                  ),
-                  onChanged: (text) {
-                    model.setTitle(text);
-                  },
+                Row(
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: TextFormField(
+                        keyboardType: TextInputType.datetime,
+                        controller: model.startTimeCon,
+                        decoration: InputDecoration(
+                          icon: Icon(Icons.access_time),
+                          labelText: "startTime",
+                        ),
+                        onChanged: (text) {
+                          model.setStartTime(text) ;
+                        },
+                      ),
+                    ),
+                    // TextFormField(
+                    //   controller: model.authorCon,
+                    //   decoration: InputDecoration(
+                    //     labelText: "Name",
+                    //   ),
+                    //   onChanged: (text) {
+                    //     model.setAuthor(text);
+                    //   },
+                    // ),
+                    Expanded(
+                      flex: 2,
+                      child: TextFormField(
+                        controller: model.startTitleCon,
+                        decoration: InputDecoration(
+                          icon: Icon(Icons.place),
+                          labelText: "title",
+                        ),
+                        onChanged: (text) {
+                          model.startTitle = text;
+                        },
+                      ),
+                    ),
+                  ],
                 ),
                 TextFormField(
-                  controller: model.authorCon,
+                  controller: model.philoCon,
                   decoration: InputDecoration(
-                    labelText: "Name",
+                    icon: Icon(Icons.directions_walk_rounded),
+                    labelText: "tool",
                   ),
                   onChanged: (text) {
-                    model.setAuthor(text);
+                    model.philosophy = text;
+                  },
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: TextFormField(
+                        keyboardType: TextInputType.datetime,
+                        controller: model.endTimeCon,
+                        decoration: InputDecoration(
+                          icon: Icon(Icons.access_time),
+                          labelText: "endTime",
+                        ),
+                        onChanged: (text) {
+                          model.endTime = text;
+                        },
+                      ),
+                    ),
+
+                    Expanded(
+                      flex: 2,
+                      child: TextFormField(
+                        controller: model.endTitleCon,
+                        decoration: InputDecoration(
+                          icon: Icon(Icons.place),
+                          labelText: "title",
+                        ),
+                        onChanged: (text) {
+                          model.endTitle = text;
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+                TextFormField(
+                  controller: model.addTodoCon,
+                  decoration: InputDecoration(
+                    icon: Icon(Icons.plus_one),
+                    labelText: "add",
+                  ),
+                  onChanged: (text) {
+                    model.addTodo = text;
                   },
                 ),
                 ElevatedButton(
@@ -47,7 +121,7 @@ class EditPage extends StatelessWidget {
                             try {
                               await model.updateList();
 
-                              Navigator.of(context).pop(model.title);
+                              Navigator.of(context).pop(model.startTitle);
                             } catch (e) {
                               final snackBar = SnackBar(
                                 backgroundColor: Colors.red,

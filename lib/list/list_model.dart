@@ -17,9 +17,14 @@ class HomeListModel extends ChangeNotifier{
     final List<Koutei> koutei= snapshot.docs.map((DocumentSnapshot document) {
       Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
       final String id= document.id;
-      final String title=data["title"];
-      final String author=data["author"];
-      return Koutei(id,title, author);
+      final String startTime=data["startTime"];
+      final String startTitle=data["startTitle"];
+      final String endTime=data["endTime"];
+      final String endTitle=data["endTitle"];
+      final String philosophy=data["philosophy"];
+      final String addTodo=data["addTodo"];
+
+      return Koutei(id,startTime,startTitle,endTime,endTitle,philosophy,addTodo);
     }).toList();
 
      this.koutei=koutei;
@@ -29,4 +34,18 @@ class HomeListModel extends ChangeNotifier{
    Future delete(Koutei koutei) {
      return FirebaseFirestore.instance.collection("todo").doc(koutei.id).delete();
    }
-}
+
+  irekae() {
+  notifyListeners();
+
+  }
+
+
+
+
+  }
+
+
+
+
+    

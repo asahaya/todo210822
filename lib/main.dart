@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:todo210822/list/list_page.dart';
+import 'package:todo210822/list/list_try_page.dart';
 
 void main()async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "list",
-      home: HomeList(),
+      home: HomeTryPage(),
     );
   }
 }

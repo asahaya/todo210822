@@ -1,7 +1,21 @@
-class Koutei{
-  Koutei(this.id,this.title,this.author);
+class Koutei {
+  Koutei(
+    this.id,
+
+  this. startTime,
+  this. endTime,
+  this. startTitle,
+  this. endTitle,
+  this. philosophy,
+  this. addTodo,
+  );
 
   String id;
-  String title;
-  String author;
+
+  String startTime;
+  String endTime;
+  String startTitle;
+  String endTitle;
+  String philosophy;
+  String addTodo;
 }

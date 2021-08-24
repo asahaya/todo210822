@@ -19,31 +19,94 @@ class Addpage extends StatelessWidget {
             return Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(children: [
-                TextFormField(
-                  decoration: InputDecoration(
-                    labelText: "名前",
-                  ),
-                  onChanged: (text) {
-                    model.title = text;
-                  },
+                Row(
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: TextFormField(
+                        keyboardType: TextInputType.datetime,
+                        decoration: InputDecoration(
+                          icon: Icon(Icons.access_time),
+                          labelText: "startTime",
+                        ),
+                        onChanged: (text) {
+                          model.startTime = text;
+                        },
+                      ),
+                    ),
+                    Expanded(
+                      flex: 2,
+                      child: TextFormField(
+
+                        decoration: InputDecoration(
+                          icon: Icon(Icons.place),
+                          labelText: "title",
+                        ),
+                        onChanged: (text) {
+                          model.startTitle = text;
+                        },
+                      ),
+                    ),
+                  ],
                 ),
                 TextFormField(
                   decoration: InputDecoration(
-                    labelText: "Name",
+                    icon: Icon(Icons.directions_walk_rounded),
+                    labelText: "tool",
                   ),
                   onChanged: (text) {
-                    model.author = text;
+                    model.philosophy = text;
+                  },
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: TextFormField(
+                        keyboardType: TextInputType.datetime,
+                        decoration: InputDecoration(
+                          icon: Icon(Icons.access_time),
+                          labelText: "endTime",
+                        ),
+                        onChanged: (text) {
+                          model.endTime = text;
+                        },
+                      ),
+                    ),
+
+                    Expanded(
+                      flex: 2,
+                      child: TextFormField(
+
+                        decoration: InputDecoration(
+                          icon: Icon(Icons.place),
+                          labelText: "title",
+                        ),
+                        onChanged: (text) {
+                          model.endTitle = text;
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+                TextFormField(
+                  decoration: InputDecoration(
+                    icon: Icon(Icons.plus_one),
+                    labelText: "add",
+                  ),
+                  onChanged: (text) {
+                    model.addTodo = text;
                   },
                 ),
                 ElevatedButton(
-                    onPressed: ()async {
+                    onPressed: () async {
                       //modelのメソッドに移動
                       try {
                         await model.addList();
 
                         Navigator.of(context).pop(true);
                       } catch (e) {
-                        final snackBar=SnackBar(
+                        final snackBar = SnackBar(
                             backgroundColor: Colors.red,
                             content: Text(e.toString()));
                         ScaffoldMessenger.of(context).showSnackBar(snackBar);
