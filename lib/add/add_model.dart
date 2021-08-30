@@ -9,6 +9,7 @@ class AddModel extends ChangeNotifier {
   String? endTitle;
   String? philosophy;
   String? addTodo;
+  // DateTime?  createdAt;
 
   Future addList() async {
     // if (startTitle == null || startTitle!.isEmpty) {
@@ -26,6 +27,7 @@ class AddModel extends ChangeNotifier {
       "endTitle":startTitle,
       "philosophy":philosophy,
       "addTodo":addTodo,
+      "createdAt":Timestamp.now(),
     });
 
   }

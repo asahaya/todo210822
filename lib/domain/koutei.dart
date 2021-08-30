@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Koutei {
   Koutei(
     this.id,
@@ -8,6 +10,7 @@ class Koutei {
   this. endTitle,
   this. philosophy,
   this. addTodo,
+      // this.createdAt,
   );
 
   String id;
@@ -18,4 +21,5 @@ class Koutei {
   String endTitle;
   String philosophy;
   String addTodo;
+  // DateTime createdAt;
 }

@@ -31,6 +31,7 @@ class EditModel extends ChangeNotifier {
   String? endTitle;
   String? philosophy;
   String? addTodo;
+  // DateTime? createdAt;
 
   //更新
 
@@ -89,6 +90,7 @@ class EditModel extends ChangeNotifier {
       "endTitle":startTitle,
       "philosophy":philosophy,
       "addTodo":addTodo,
+      "createdAt":Timestamp.now()
     });
   }
 }
