@@ -10,6 +10,7 @@ class Koutei {
   this. endTitle,
   this. philosophy,
   this. addTodo,
+
       // this.createdAt,
   );
 
@@ -21,5 +22,6 @@ class Koutei {
   String endTitle;
   String philosophy;
   String addTodo;
+
   // DateTime createdAt;
 }

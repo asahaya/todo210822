@@ -10,7 +10,7 @@ class HomeListModel extends ChangeNotifier {
   List<Koutei>? koutei;
 
   void tsuikaList() async {
-    final QuerySnapshot snapshot = await _userColl.get();
+    final QuerySnapshot snapshot = await _userColl.orderBy("createdAt",descending: false).get();
 
     final List<Koutei> koutei = snapshot.docs.map((DocumentSnapshot document) {
       Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
@@ -22,14 +22,13 @@ class HomeListModel extends ChangeNotifier {
       final String endTitle = data["endTitle"];
       final String philosophy = data["philosophy"];
       final String addTodo = data["addTodo"];
-      final DateTime createdAt = data["createdAt"];
+      final Timestamp createdAt = data["createdAt"];
 
       return Koutei(id, startTime, startTitle, endTime, endTitle, philosophy,
           addTodo);
     }).toList();
 
     this.koutei = koutei;
-
     notifyListeners();
   }
 
@@ -40,12 +39,18 @@ class HomeListModel extends ChangeNotifier {
         .delete();
   }
 
-  void irekae() {
-    FirebaseFirestore.instance
-        .collection("todo")
-        .orderBy("createdAt", descending: true).get();
+  // void irekae() async{
+  //   final QuerySnapshot snapshot = await _userColl.get();
+  //   FirebaseFirestore.instance
+  //       .collection("todo")
+  //       .get();
 
-    this.koutei=koutei;
-      notifyListeners();
-  }
+    //   FirebaseFirestore.instance
+    //       .collection("todo")
+    //       .orderBy("createdAt", descending: true).get();
+
+
+  //     this.koutei=koutei;
+  //     notifyListeners();
+  // }
 }

@@ -38,42 +38,62 @@ class HomeList extends StatelessWidget {
                                 Expanded(
                                   flex: 1,
                                   child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.stretch,
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Container(
                                         color: Colors.deepPurpleAccent,
                                         child: Expanded(
-                                          flex: 1,
-                                          child: Text(
-                                            koutei.startTime,
-                                            style: TextStyle(fontSize: 20),
-                                          ),
+                                          flex: 3,
+                                          child: Text(koutei.startTime,
+                                              style: TextStyle(fontSize: 20)),
                                         ),
                                       ),
                                       Expanded(
-                                          flex: 2, child: Text(koutei.startTime)),
+                                          flex: 1,
+                                          child: Center(child: Text("|"))),
+                                      Container(
+                                        color: Colors.deepPurpleAccent,
+                                        child: Expanded(
+                                          flex: 3,
+                                          child: Text(koutei.startTitle,
+                                              style: TextStyle(fontSize: 20)),
+                                        ),
+                                      ),
                                     ],
                                   ),
                                 ),
                                 Expanded(
-                                  flex: 2,
+                                  flex: 3,
                                   child: Column(
+                                    crossAxisAlignment:
+                                    CrossAxisAlignment.stretch,
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Container(
-                                        color: Colors.deepPurpleAccent,
-                                        child: Expanded(
-                                          flex: 1,
-                                          child: Text(
-                                            koutei.startTime,
-                                            style: TextStyle(fontSize: 20),
-                                          ),
-                                        ),
-                                      ),
+                                          color: Colors.deepPurpleAccent,
+                                          child: Expanded(
+                                              flex: 3,
+                                              child: Text(
+                                                koutei.endTime,
+                                                style: TextStyle(fontSize: 20),
+                                              ))),
                                       Expanded(
-                                          flex: 2, child: Text(koutei.startTime)),
+                                          flex: 1,
+                                          child: Text(koutei.philosophy)),
+                                      Container(
+                                          color: Colors.deepPurpleAccent,
+                                          child: Expanded(
+                                              flex: 3,
+                                              child: Text(
+                                                koutei.endTime,
+                                                style: TextStyle(fontSize: 20),
+                                              ))),
                                     ],
                                   ),
                                 ),
-                                Expanded(flex:1,child: Text(koutei.addTodo)),
+                                Expanded(flex: 1, child: Text(koutei.addTodo)),
                               ],
                             ),
                           ),
@@ -103,7 +123,7 @@ class HomeList extends StatelessWidget {
                             }
                             //void なのでawaitはいらない
                             model.tsuikaList();
-                            model.irekae();
+                            // model.irekae();
                           },
                         ),
                         IconSlideAction(
@@ -143,7 +163,7 @@ class HomeList extends StatelessWidget {
 
               //void なのでawaitはいらない
               model.tsuikaList();
-              model.irekae();
+              // model.irekae();
             },
             tooltip: "+",
             child: Icon(Icons.add),

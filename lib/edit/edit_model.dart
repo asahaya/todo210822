@@ -86,11 +86,11 @@ class EditModel extends ChangeNotifier {
 
       "startTime":startTime,
       "startTitle":startTitle,
-      "endTime":startTime,
-      "endTitle":startTitle,
+      "endTime":endTime,
+      "endTitle":endTitle,
       "philosophy":philosophy,
       "addTodo":addTodo,
-      "createdAt":Timestamp.now()
+      // "createdAt":Timestamp.now(),
     });
   }
 }
