@@ -2,6 +2,7 @@
     package="com.example.todo210822">
    <application
         android:label="todo210822"
+        android:requestLegacyExternalStorage="true"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

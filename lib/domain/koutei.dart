@@ -3,15 +3,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class Koutei {
   Koutei(
     this.id,
+    this.startTime,
+    this.endTime,
+    this.startTitle,
+    this.endTitle,
+    this.philosophy,
+    this.addTodo,
+    this.imgURL,
 
-  this. startTime,
-  this. endTime,
-  this. startTitle,
-  this. endTitle,
-  this. philosophy,
-  this. addTodo,
-
-      // this.createdAt,
+    // this.createdAt,
   );
 
   String id;
@@ -22,6 +22,7 @@ class Koutei {
   String endTitle;
   String philosophy;
   String addTodo;
+  String? imgURL;
 
-  // DateTime createdAt;
+// DateTime createdAt;
 }

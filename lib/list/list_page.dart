@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
@@ -9,6 +10,7 @@ import 'package:todo210822/list/domain/koutei.dart';
 import 'package:todo210822/list/list_model.dart';
 
 class HomeList extends StatelessWidget {
+  final List<int> items=List<int>.generate(50, (int index) => index);
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<HomeListModel>(
@@ -24,120 +26,133 @@ class HomeList extends StatelessWidget {
             if (koutei == null) {
               return CircularProgressIndicator();
             }
-
             final List<Widget> widget = koutei
-                .map((koutei) => Slidable(
-                      actionPane: SlidableDrawerActionPane(),
-                      child: Card(
-                        child: Container(
-                          color: Colors.grey,
-                          child: SizedBox(
-                            height: 100,
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  flex: 1,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.stretch,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Container(
-                                        color: Colors.deepPurpleAccent,
-                                        child: Expanded(
-                                          flex: 3,
-                                          child: Text(koutei.startTime,
-                                              style: TextStyle(fontSize: 20)),
-                                        ),
-                                      ),
-                                      Expanded(
-                                          flex: 1,
-                                          child: Center(child: Text("|"))),
-                                      Container(
-                                        color: Colors.deepPurpleAccent,
-                                        child: Expanded(
-                                          flex: 3,
-                                          child: Text(koutei.startTitle,
-                                              style: TextStyle(fontSize: 20)),
-                                        ),
-                                      ),
-                                    ],
+                .map((koutei) => ReorderableListView(
+                children: [
+                  for (int index = 0; index < items.length; index++)
+                  Slidable(
+                        actionPane: SlidableDrawerActionPane(),
+                        child: Card(
+                          key: Key("$index"),
+                          child: Container(
+                            color: Colors.grey,
+                            child: SizedBox(
+                              height: 100,
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    flex: 1,
+                                    child: koutei.imgURL != null
+                                        ? Image.network(koutei.imgURL!)
+                                        : Text(""),
                                   ),
-                                ),
-                                Expanded(
-                                  flex: 3,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                    CrossAxisAlignment.stretch,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Container(
+                                  Expanded(
+                                    flex: 1,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.stretch,
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Container(
                                           color: Colors.deepPurpleAccent,
                                           child: Expanded(
-                                              flex: 3,
-                                              child: Text(
-                                                koutei.endTime,
-                                                style: TextStyle(fontSize: 20),
-                                              ))),
-                                      Expanded(
-                                          flex: 1,
-                                          child: Text(koutei.philosophy)),
-                                      Container(
+                                            flex: 3,
+                                            child: Text(koutei.startTime,
+                                                style: TextStyle(fontSize: 20)),
+                                          ),
+                                        ),
+                                        Expanded(
+                                            flex: 1,
+                                            child: Center(child: Text("|"))),
+                                        Container(
                                           color: Colors.deepPurpleAccent,
                                           child: Expanded(
-                                              flex: 3,
-                                              child: Text(
-                                                koutei.endTime,
-                                                style: TextStyle(fontSize: 20),
-                                              ))),
-                                    ],
+                                            flex: 3,
+                                            child: Text(koutei.startTitle,
+                                                style: TextStyle(fontSize: 20)),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ),
-                                Expanded(flex: 1, child: Text(koutei.addTodo)),
-                              ],
+                                  Expanded(
+                                    flex: 3,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.stretch,
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Container(
+                                            color: Colors.deepPurpleAccent,
+                                            child: Expanded(
+                                                flex: 3,
+                                                child: Text(
+                                                  koutei.endTime,
+                                                  style: TextStyle(fontSize: 20),
+                                                ))),
+                                        Expanded(
+                                            flex: 1,
+                                            child: Text(koutei.philosophy)),
+                                        Container(
+                                            color: Colors.deepPurpleAccent,
+                                            child: Expanded(
+                                                flex: 3,
+                                                child: Text(
+                                                  koutei.endTime,
+                                                  style: TextStyle(fontSize: 20),
+                                                ))),
+                                      ],
+                                    ),
+                                  ),
+                                  Expanded(flex: 1, child: Text(koutei.addTodo)),
+                                ],
+                              ),
                             ),
                           ),
+                          //Text(koutei.title),
                         ),
-                        //Text(koutei.title),
+                        secondaryActions: <Widget>[
+                          IconSlideAction(
+                            caption: 'edit',
+                            color: Colors.blue,
+                            icon: Icons.edit,
+                            onTap: () async {
+                              //編集画面に遷移
+                              //画面遷移
+                              final String? title = await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => EditPage(koutei),
+                                ),
+                              );
+                              if (title != null) {
+                                final snackBar = SnackBar(
+                                    backgroundColor: Colors.purpleAccent,
+                                    content: Text(" を編集しました"));
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(snackBar);
+                              }
+                              //void なのでawaitはいらない
+                              model.tsuikaList();
+                              // model.irekae();
+                            },
+                          ),
+                          IconSlideAction(
+                            caption: 'Delete',
+                            color: Colors.red,
+                            icon: Icons.delete,
+                            onTap: () async {
+                              //削除
+                              await showConfirmDialog(context, koutei, model);
+                            },
+                          ),
+                        ],
                       ),
-                      secondaryActions: <Widget>[
-                        IconSlideAction(
-                          caption: 'edit',
-                          color: Colors.blue,
-                          icon: Icons.edit,
-                          onTap: () async {
-                            //編集画面に遷移
-                            //画面遷移
-                            final String? title = await Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => EditPage(koutei),
-                              ),
-                            );
-                            if (title != null) {
-                              final snackBar = SnackBar(
-                                  backgroundColor: Colors.purpleAccent,
-                                  content: Text(" を編集しました"));
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(snackBar);
-                            }
-                            //void なのでawaitはいらない
-                            model.tsuikaList();
-                            // model.irekae();
-                          },
-                        ),
-                        IconSlideAction(
-                          caption: 'Delete',
-                          color: Colors.red,
-                          icon: Icons.delete,
-                          onTap: () async {
-                            //削除
-                            await showConfirmDialog(context, koutei, model);
-                          },
-                        ),
-                      ],
-                    ))
-                .toList();
+              ],
+              onReorder: (int oldIndex, int newIndex){
+                model.irekae(oldIndex, newIndex,items);
+              }
+                ),).toList();
             return ListView(
               children: widget,
             );

@@ -23,14 +23,27 @@ class HomeListModel extends ChangeNotifier {
       final String philosophy = data["philosophy"];
       final String addTodo = data["addTodo"];
       final Timestamp createdAt = data["createdAt"];
+      final String? imgURL = data["imageURL"];
 
       return Koutei(id, startTime, startTitle, endTime, endTitle, philosophy,
-          addTodo);
+          addTodo,imgURL);
     }).toList();
 
     this.koutei = koutei;
     notifyListeners();
   }
+
+  void irekae(int oldIndex, int newIndex,items){
+
+    if (oldIndex < newIndex) {
+      newIndex -= 1;
+    }
+    final int item = items.removeAt(oldIndex);
+    items.insert(newIndex, item);
+    notifyListeners();
+  }
+
+
 
   Future delete(Koutei koutei) {
     return FirebaseFirestore.instance
